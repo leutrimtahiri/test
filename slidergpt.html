@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Slider</title>
+    <style>
+      #slider {
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+        margin: 0 auto;
+        white-space: nowrap;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      #slider img {
+        width: 500px;
+        height: 300px;
+        object-fit: cover;
+        display: inline-block;
+      }
+
+      #prevBtn,
+      #nextBtn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      #prevBtn:hover,
+      #nextBtn:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      #prevBtn {
+        left: 0;
+      }
+
+      #nextBtn {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="slider">
+      <img src="https://via.placeholder.com/500x300.png?text=Slide+1" alt="Slide 1" />
+      <img src="https://via.placeholder.com/500x300.png?text=Slide+2" alt="Slide 2" />
+      <img src="https://via.placeholder.com/500x300.png?text=Slide+3" alt="Slide 3" />
+      <img src="https://via.placeholder.com/500x300.png?text=Slide+4" alt="Slide 4" />
+    </div>
+    <div id="prevBtn">&#10094;</div>
+    <div id="nextBtn">&#10095;</div>
+
+    <script>
+      const slider = document.getElementById("slider");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let slideIndex = 0;
+      let slideWidth = slider.offsetWidth;
+      showSlides();
+
+      function showSlides() {
+        slideIndex++;
+        if (slideIndex > slider.childElementCount) {
+          slideIndex = 1;
+        }
+        slider.style.transform = `translateX(${-slideWidth * slideIndex}px)`;
+        setTimeout(showSlides, 5000); // Change image every 5 seconds
+      }
+
+      prevBtn.addEventListener("click", () => {
+        slideIndex--;
+        if (slideIndex < 1) {
+          slideIndex = slider.childElementCount;
+        }
+        slider.style.transform = `translateX(${-slideWidth * (slideIndex - 1)}px)`;
+      });
+
+      nextBtn.addEventListener("click", () => {
+        slideIndex++;
+        if (slideIndex > slider.childElementCount) {
+          slideIndex = 1;
+        }
+        slider.style.transform = `translateX(${-slideWidth * slideIndex}px)`;
+      });
+
+      window.addEventListener("resize", () => {
+        slideWidth = slider.offsetWidth;
+        slider.style.transform = `translateX(${-slideWidth * (slideIndex - 1)}px)`;
+      });
+    </script>
+  </body>
+</html>
